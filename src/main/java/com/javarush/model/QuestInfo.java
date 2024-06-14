@@ -41,8 +41,6 @@ public class QuestInfo {
     }
 
     public static String getQuestResult(Option option) {
-        OptionType optionType = option.getOptionType();
-        int nextOptionNodeIndex = option.getNextOptionNodeIndex();
         return option.getResult();
     }
 
