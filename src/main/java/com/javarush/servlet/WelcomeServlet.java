@@ -14,11 +14,13 @@ import java.io.IOException;
 
 @WebServlet(name = "WelcomeServlet", value = "/welcome")
 public class WelcomeServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(WelcomeServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession(true);
 
+        logger.info("Resetting score counters");
         session.setAttribute("wins", 0);
         session.setAttribute("losses", 0);
         session.setAttribute("games-played", 0);

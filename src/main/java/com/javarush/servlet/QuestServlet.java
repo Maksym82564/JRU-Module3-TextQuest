@@ -4,6 +4,8 @@ import com.javarush.exception.InvalidQuestStateException;
 import com.javarush.model.Option;
 import com.javarush.model.OptionType;
 import com.javarush.model.QuestInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import java.io.IOException;
 
 @WebServlet(name = "QuestServlet", value = "/quest")
 public class QuestServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -37,6 +40,7 @@ public class QuestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
+        logger.info("Retrieving info from selected option");
         int currentNodeIndex = (int) session.getAttribute("node-index");
         int selectedOptionIndex = Integer.parseInt(req.getParameter("option"));
 
@@ -48,6 +52,7 @@ public class QuestServlet extends HttpServlet {
 
         switch (selectedOptionType) {
             case WIN -> {
+                logger.info("Player won, wins count increased");
                 int wins = (int) session.getAttribute("wins");
                 session.setAttribute("wins", wins + 1);
                 int gamesPlayed = (int) session.getAttribute("games-played");
@@ -55,6 +60,7 @@ public class QuestServlet extends HttpServlet {
                 requestDispatcher = getServletContext().getRequestDispatcher("/finish.jsp");
             }
             case LOSS -> {
+                logger.info("Player lost, losses count increased");
                 int losses = (int) session.getAttribute("losses");
                 session.setAttribute("losses", losses + 1);
                 int gamesPlayed = (int) session.getAttribute("games-played");
@@ -62,16 +68,19 @@ public class QuestServlet extends HttpServlet {
                 requestDispatcher = getServletContext().getRequestDispatcher("/finish.jsp");
             }
             case REGULAR -> {
+                logger.info("Making transition to other option node");
                 int nextIndex = selectedOption.getNextOptionNodeIndex();
                 if (nextIndex >= 0 && nextIndex < QuestInfo.getOptionNodes().size()) {
                     session.setAttribute("node-index", nextIndex);
                     requestDispatcher = getServletContext().getRequestDispatcher("/quest.jsp");
                 }
                 else {
+                    logger.error("Invalid node index");
                     throw new InvalidQuestStateException("Invalid node index");
                 }
             }
             default -> {
+                logger.error("Invalid option type");
                 throw new InvalidQuestStateException("Invalid option type");
             }
         }
