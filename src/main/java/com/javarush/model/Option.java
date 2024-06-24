@@ -1,5 +1,10 @@
 package com.javarush.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@Getter
+@EqualsAndHashCode
 public class Option {
     private final String text;
     private final int nextOptionNodeIndex;
@@ -18,21 +23,5 @@ public class Option {
         this.text = text;
         this.nextOptionNodeIndex = -1;
         this.result = result;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public int getNextOptionNodeIndex() {
-        return nextOptionNodeIndex;
-    }
-
-    public OptionType getOptionType() {
-        return optionType;
-    }
-
-    public String getResult() {
-        return result;
     }
 }

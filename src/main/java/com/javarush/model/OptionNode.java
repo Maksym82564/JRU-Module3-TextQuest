@@ -1,8 +1,13 @@
 package com.javarush.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@EqualsAndHashCode
 public class OptionNode {
     String issue;
     List<Option> options;
@@ -12,11 +17,4 @@ public class OptionNode {
         options = new ArrayList<>();
     }
 
-    public String getIssue() {
-        return issue;
-    }
-
-    public List<Option> getOptions() {
-        return options;
-    }
 }
