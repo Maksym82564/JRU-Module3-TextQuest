@@ -51,15 +51,16 @@ public class QuestInfo {
         return questInfo;
     }
 
-    public static Option getOptionFromNodes(int nodeIndex, int optionIndex) {
-        return QuestInfo.getOptionNodes().get(nodeIndex).getOptions().get(optionIndex);
+    public Option getOptionFromNodes(int nodeIndex, int optionIndex) {
+        QuestInfo instance = QuestInfo.getInstance();
+        return instance.getOptionNodes().get(nodeIndex).getOptions().get(optionIndex);
     }
 
-    public static String getQuestDescription() {
+    public String getQuestDescription() {
         return getInstance().questDescription;
     }
 
-    public static List<OptionNode> getOptionNodes() {
+    public List<OptionNode> getOptionNodes() {
         return getInstance().questOptionNodes;
     }
 }

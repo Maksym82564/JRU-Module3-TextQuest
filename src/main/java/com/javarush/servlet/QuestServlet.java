@@ -44,7 +44,8 @@ public class QuestServlet extends HttpServlet {
         int currentNodeIndex = (int) session.getAttribute("node-index");
         int selectedOptionIndex = Integer.parseInt(req.getParameter("option"));
 
-        Option selectedOption = QuestInfo.getOptionFromNodes(currentNodeIndex, selectedOptionIndex);
+        QuestInfo instance = QuestInfo.getInstance();
+        Option selectedOption = instance.getOptionFromNodes(currentNodeIndex, selectedOptionIndex);
         String questResult = QuestInfo.getQuestResult(selectedOption);
         OptionType selectedOptionType = selectedOption.getOptionType();
 
@@ -70,7 +71,7 @@ public class QuestServlet extends HttpServlet {
             case REGULAR -> {
                 logger.info("Making transition to other option node");
                 int nextIndex = selectedOption.getNextOptionNodeIndex();
-                if (nextIndex >= 0 && nextIndex < QuestInfo.getOptionNodes().size()) {
+                if (nextIndex >= 0 && nextIndex < instance.getOptionNodes().size()) {
                     session.setAttribute("node-index", nextIndex);
                     requestDispatcher = getServletContext().getRequestDispatcher("/quest.jsp");
                 }
