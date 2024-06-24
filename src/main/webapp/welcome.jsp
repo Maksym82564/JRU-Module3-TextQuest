@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Гра-квест</h1>
-<p class="quest-description"><%= QuestInfo.getQuestDescription() %></p>
+<p class="quest-description"><%= QuestInfo.getInstance().getQuestDescription() %></p>
 
 <form action="quest" method="get" id="questForm">
     <input type="hidden" name="newGame" value="true">

@@ -14,7 +14,7 @@
 </head>
 
     <% int index = (int) session.getAttribute("node-index"); %>
-    <% OptionNode optionNode = QuestInfo.getOptionNodes().get(index); %>
+    <% OptionNode optionNode = QuestInfo.getInstance().getOptionNodes().get(index); %>
     <% List<Option> options = optionNode.getOptions(); %>
 
 <body>
